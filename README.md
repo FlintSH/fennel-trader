@@ -1,6 +1,6 @@
-# Fennel Auto Stock Buyer
+# Fennel Auto Stock Trader
 
-This is a simple Python script that uses the Fennel Invest API to automatically buy stocks across all accounts associated with a user's login.
+This is a simple Python script that uses the Fennel Invest API to automatically buy or sell stocks across all accounts associated with a user's login.
 
 ## How it works
 
@@ -9,7 +9,7 @@ It's pretty simple:
 2. Run the script (python app.py)
 3. Give your authentication info
 4. Specify a stock ticker and quantity
-5. Watch it place buy orders for the specified stock on all available accounts
+5. Watch it place orders for the specified stock on all available accounts
 
 ## Maintenance
 
