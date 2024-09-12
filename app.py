@@ -27,27 +27,39 @@ def main():
         print("Using existing credentials from fennel_credentials.pkl")
 
     # Get stock information
-    ticker = input("Enter the stock ticker you want to buy: ").upper()
-    quantity = int(input("Enter the quantity to buy: "))
+    buy_or_sell = input("Do you want to buy or sell? (b/s) ").lower()
+    action = "buy" if buy_or_sell == "b" else "sell"
+    ticker = input(f"Enter the stock ticker you want to {action}: ").upper()
+    quantity = int(input(f"Enter the quantity to {action}: "))
 
-    # Get account IDs and place orders
-    account_ids = fennel.get_account_ids()
-    for account_id in account_ids:
-        try:
-            order = fennel.place_order(
-                account_id=account_id,
-                ticker=ticker,
-                quantity=quantity,
-                side="buy",
-                price="market",
-                dry_run=False
-            )
-            print(f"Order placed for account {account_id}:")
-            print(order)
-        except Exception as e:
-            print(f"Failed to place order for account {account_id}: {str(e)}")
+    # Confirmation
+    print("\nThis is what you're about to do:")
+    print(f"Action: {action.capitalize()}")
+    print(f"Stock: {ticker}")
+    print(f"Quantity: {quantity}")
+    confirm = input("Do you want to proceed? This will place orders on all your accounts (y/n): ").lower()
 
-    print("All orders have been processed.")
+    if confirm == 'y':
+        # Get account IDs and place orders
+        account_ids = fennel.get_account_ids()
+        for account_id in account_ids:
+            try:
+                order = fennel.place_order(
+                    account_id=account_id,
+                    ticker=ticker,
+                    quantity=quantity,
+                    side=action,
+                    price="market",
+                    dry_run=False
+                )
+                print(f"Order placed for account {account_id}:")
+                print(order)
+            except Exception as e:
+                print(f"Failed to place order for account {account_id}: {str(e)}")
+
+        print("All orders have been processed.")
+    else:
+        print("Order cancelled.")
 
 if __name__ == "__main__":
     main()
