@@ -5,7 +5,9 @@ def main():
     fennel = Fennel()
 
     # Check if fennel_credentials.pkl exists
-    if not os.path.exists('fennel_credentials.pkl'):
+    if not os.path.exists('fennel_credentials.pkl') or not fennel._verify_login():
+        if os.path.exists('fennel_credentials.pkl'):
+            fennel._clear_credentials()
         # Authentication process
         email = input("Enter your email: ")
 
